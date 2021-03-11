@@ -9,6 +9,7 @@ namespace DS.Tests
 	public class CartServiceTests
 	{
 		private ICartService _service;
+		
 		[SetUp]
 		public void Setup()
 		{
@@ -16,8 +17,8 @@ namespace DS.Tests
 			_service = new CartService();
 		}
 
-		[Test, TestCaseSource(nameof(AddInputNearestCommonNode))]
-		public void Test1(IEnumerable<Item> items, double total)
+		[Test, TestCaseSource(nameof(AddInput))]
+		public void GetTotalTest(IEnumerable<Item> items, double total)
 		{
 			foreach (var item in items)
 			{
@@ -28,7 +29,7 @@ namespace DS.Tests
 		}
 		
 		// TestCaseData
-		private static IEnumerable<TestCaseData> AddInputNearestCommonNode()
+		private static IEnumerable<TestCaseData> AddInput()
 		{
 			var x = new List<Item>();
 			x.Add(new Item(3));
