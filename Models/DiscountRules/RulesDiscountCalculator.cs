@@ -24,7 +24,7 @@ namespace Models.DiscountRules
 			var sum = 0m;
 			foreach (var item in items)
 			{
-				var rule = _rulesRepository.GetById(item.ProductId);
+				var rule = _rulesRepository.GetById(item.ProductId) ?? new OrdinaryDiscountRule();
 				sum += rule.Apply(item);
 			}
 			return sum;
