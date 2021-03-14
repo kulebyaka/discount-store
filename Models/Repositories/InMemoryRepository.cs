@@ -3,27 +3,37 @@ using System.Linq;
 
 namespace Models.Repositories
 {
-	public class InMemoryRepository<T> : IRepository<T>
+	public class InMemoryRepository<T> : IRepository<T> where T : IDbEntity 
 	{
-		private readonly IList<object> _entities = new List<object>();
+		private readonly IList<T> _entities;
+
+		public InMemoryRepository(IList<T> defaultCollection)
+		{
+			_entities = defaultCollection;
+		}
 		public T Get(int id)
 		{
-			return _entities.OfType<T>().SingleOrDefault(e => e.Equals(id));
+			return _entities.SingleOrDefault(e => e.Id.Equals(id));
 		}
 
-		public IList<T> GetAll<T>()
+		public IList<T> GetAll()
 		{
-			return _entities.OfType<T>().ToList();
+			return _entities;
 		}
 
-		public IQueryable<T> Query<T>()
+		public IQueryable<T> Query()
 		{
-			return GetAll<T>().AsQueryable();
+			return GetAll().AsQueryable();
 		}
 		
 		public void Add(T item)
 		{
 			_entities.Add(item);
 		}
+	}
+
+	public interface IDbEntity
+	{
+		public int Id { get; set; }
 	}
 }
