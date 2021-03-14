@@ -2,7 +2,8 @@
 {
 	public enum ItemType
 	{
+		Vase,
 		Mug,
-		Vase
+		Napkins 
 	}
 }
