@@ -14,7 +14,7 @@ namespace Models.Repositories
 			_entities = defaultCollection;
 		}
 		
-		public IList<T> GetByQuery<TKey>(Expression<Func<T, bool>> prediction)
+		public IList<T> GetByQuery(Expression<Func<T, bool>> prediction)
 		{
 			return _entities.Where(prediction.Compile()).ToList();
 		}
@@ -27,11 +27,6 @@ namespace Models.Repositories
 		public IList<T> GetAll()
 		{
 			return _entities;
-		}
-
-		public IQueryable<T> Query()
-		{
-			return GetAll().AsQueryable();
 		}
 		
 		public void Add(T item)

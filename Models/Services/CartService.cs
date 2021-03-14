@@ -7,24 +7,22 @@ namespace Models.Services
 	public class CartService : ICartService
 	{
 		private readonly IDiscountCalculator _discountCalculator;
-		private readonly ICartItemsRepository _cartRepo;
 		private readonly ICartItemsRepository _cartItemsRepository;
 
-		public CartService(IDiscountCalculator discountCalculator, ICartItemsRepository cartRepo, ICartItemsRepository cartItemsRepository)
+		public CartService(IDiscountCalculator discountCalculator, ICartItemsRepository cartItemsRepository)
 		{
 			this._discountCalculator = discountCalculator;
-			this._cartRepo = cartRepo;
-			_cartItemsRepository = cartItemsRepository;
+			this._cartItemsRepository = cartItemsRepository;
 		}
 
 		public void Add(int productId)
 		{
-			_cartRepo.Add(productId);
+			_cartItemsRepository.Add(productId);
 		}
 
 		public void Remove(int productId)
 		{
-			_cartRepo.Remove(productId);
+			_cartItemsRepository.Remove(productId);
 		}
 
 		public decimal GetTotal()

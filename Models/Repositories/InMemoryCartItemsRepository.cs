@@ -31,13 +31,17 @@ namespace Models.Repositories
 
 		public IEnumerable<CartItem> GetAll()
 		{
-			var ret = inMemory.Where(a => a.Value > 0)
+			var currentItems = inMemory.Where(a => a.Value > 0);
+			Dictionary<int, decimal> products = _productRepository
+				.GetByQuery(pr=> currentItems.Select(kv => kv.Key)
+				.Contains(pr.Id)).ToDictionary(a=>a.Id, a=>a.Price);
+			List<CartItem> ret = currentItems
 				.Select(a => 
 					new CartItem
 					{
 						ProductId = a.Key, 
 						Quantity = a.Value, 
-						Product = _productRepository.GetById(a.Key)
+						Price = products[a.Key]
 					}).ToList();
 			return ret;
 		}

@@ -18,8 +18,8 @@ namespace Models.DiscountRules
 		public decimal Apply(CartItem cartItem)
 		{
 			int quantity = cartItem.Quantity;
-			return (quantity / _specialCostQuantity)*_specialCost 
-			       + (quantity%_specialCostQuantity)*cartItem.Product.Price;
+			return (quantity / _specialCostQuantity) * _specialCost 
+			       + (quantity%_specialCostQuantity) * cartItem.Price;
 		}
 
 		public string GetName()

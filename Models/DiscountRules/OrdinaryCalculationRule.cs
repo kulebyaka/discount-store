@@ -6,7 +6,7 @@ namespace Models.DiscountRules
 	{
 		public decimal Apply(CartItem cartItem)
 		{
-			return cartItem.Quantity * cartItem.Product.Price;
+			return cartItem.Quantity * cartItem.Price;
 		}
 
 		public string GetName()

@@ -30,7 +30,7 @@ namespace DS.Tests
 
 			repositoryMock.Setup(repo => repo.Add(It.IsAny<TItem>()));
 
-			repositoryMock.Setup(repo => repo.GetByQuery<TItem>(It.IsAny<Expression<Func<TItem, bool>>>()))
+			repositoryMock.Setup(repo => repo.GetByQuery(It.IsAny<Expression<Func<TItem, bool>>>()))
 				.Returns((Expression<Func<TItem, bool>> query) =>
 				{
 					IEnumerable<TItem> items = itemListProvider();
