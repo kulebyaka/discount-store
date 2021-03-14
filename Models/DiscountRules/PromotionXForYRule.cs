@@ -3,7 +3,7 @@ using Models.Repositories;
 
 namespace Models.DiscountRules
 {
-	public class PromotionXForYRule : IDiscountRule
+	public class PromotionXForYRule : ICalculationRule<CartItem>
 	{
 		private readonly int _specialCostQuantity;
 		private readonly decimal _specialCost;

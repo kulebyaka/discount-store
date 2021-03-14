@@ -6,12 +6,12 @@ namespace Models.Repositories
 {
 	public class InMemoryCartItemsRepository : ICartItemsRepository
 	{
-		private IProductsRepository productRepository;
+		private readonly IProductsRepository _productRepository;
 
 		private IDictionary<int, int> inMemory = new Dictionary<int, int>();
 		public InMemoryCartItemsRepository(IProductsRepository productRepository)
 		{
-			this.productRepository = productRepository;
+			this._productRepository = productRepository;
 		}
 
 		public void Add(int productId)
@@ -37,7 +37,7 @@ namespace Models.Repositories
 					{
 						ProductId = a.Key, 
 						Quantity = a.Value, 
-						Product = productRepository.GetById(a.Key)
+						Product = _productRepository.GetById(a.Key)
 					}).ToList();
 			return ret;
 		}

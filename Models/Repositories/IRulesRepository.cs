@@ -5,6 +5,6 @@ namespace Models.Repositories
 {
 	public interface IRulesRepository
 	{
-		IDiscountRule GetByProductId(int productId);
+		ICalculationRule<CartItem> GetByProductId(int productId);
 	}
 }

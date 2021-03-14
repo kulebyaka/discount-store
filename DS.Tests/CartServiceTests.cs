@@ -10,42 +10,41 @@ using NUnit.Framework;
 namespace DS.Tests
 {
 	[TestFixture]
-	public class CartServiceTests
+	[Parallelizable(ParallelScope.All)]
+	public class CartServiceTests : TestBase
 	{
-		private IContainer _container;
-		
 		[SetUp]
-		public void Setup()
+		public override void Setup()
 		{
-			_container = new Container();
-			_container.Register<ICartService, CartService>();
-			_container.Register<ICartItemsRepository, InMemoryCartItemsRepository>(Reuse.Singleton);
-			_container.Register<IProductsRepository, InMemoryProductsRepository>(Reuse.Singleton);
+			base.Setup();
+			Container.Register<ICartService, CartService>();
+			Container.Register<ICartItemsRepository, InMemoryCartItemsRepository>(Reuse.Singleton);
+			Container.Register<IProductsRepository, InMemoryProductsRepository>(Reuse.Singleton);
 			// compile-time known type
 			var inMemoryProductsRepository = new InMemoryProductsRepository(new List<Product>(){
 				new((int)ItemType.Vase, "Vase", 1.2m),
-				new((int)ItemType.Mug, "Big mug", 1m),
-				new((int)ItemType.Napkins, "Napkins pack", 0.45m),
+				new((int)ItemType.Mug, "Big mug", 1m,  new PromotionXForYRule(2, 1.5m)),
+				new((int)ItemType.Napkins, "Napkins pack", 0.45m, new PromotionXForYRule(3, 0.9m)),
 			});
-			_container.Use<IProductsRepository>(inMemoryProductsRepository);
-			_container.RegisterInstance(inMemoryProductsRepository);
+			Container.Use<IProductsRepository>(inMemoryProductsRepository);
+			Container.RegisterInstance(inMemoryProductsRepository);
 			
-			_container.Register<IDiscountCalculator, RulesDiscountCalculator>();
-			_container.Register<IRulesRepository, RulesRepository>(Reuse.Singleton);
-			var inMemoryRules = new RulesRepository(new Dictionary<int, IDiscountRule>
+			Container.Register<IDiscountCalculator, RulesDiscountCalculator>();
+			
+			Container.Register<IRulesRepository, RulesRepository>(Reuse.Singleton);
+			var inMemoryRules = new RulesRepository(new Dictionary<int, ICalculationRule<CartItem>>
 			{
 				{(int)ItemType.Mug, new PromotionXForYRule(2, 1.5m)},
 				{(int)ItemType.Napkins, new PromotionXForYRule(3, 0.9m)}
 			});
-			_container.Use<IRulesRepository>(inMemoryRules);
-			_container.RegisterInstance(inMemoryRules);
-
+			Container.Use<IRulesRepository>(inMemoryRules);
+			Container.RegisterInstance(inMemoryRules);
 		}
 
 		[Test, TestCaseSource(nameof(AddInput))]
 		public void GetTotalTest(int[] productIds, decimal total)
 		{
-			var service = _container.Resolve<ICartService>();
+			var service = Container.Resolve<ICartService>();
 
 			foreach (int productId in productIds)
 			{

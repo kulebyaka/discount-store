@@ -5,14 +5,14 @@ namespace Models.Repositories
 {
 	public class RulesRepository : IRulesRepository
 	{
-		private readonly Dictionary<int, IDiscountRule> _inMemory;
+		private readonly Dictionary<int, ICalculationRule<CartItem>> _inMemory;
 
-		public RulesRepository(Dictionary<int, IDiscountRule> inMemory)
+		public RulesRepository(Dictionary<int, ICalculationRule<CartItem>> inMemory)
 		{
 			_inMemory = inMemory;
 		}
 
-		public IDiscountRule GetByProductId(int productId)
+		public ICalculationRule<CartItem> GetByProductId(int productId)
 		{
 			var exist = _inMemory.TryGetValue(productId, out var retVal);
 			return exist ? retVal : null;

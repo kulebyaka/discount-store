@@ -10,13 +10,13 @@ namespace DS.Tests
 {
 	public abstract class TestBase
 	{
-		protected TestBase()
+		public virtual void Setup()
 		{
 			Container = new Container();
 			RegisterCommonServices();
 		}
 
-		protected Container Container { get; }
+		protected Container Container { get; set; }
 
 		private void RegisterCommonServices()
 		{

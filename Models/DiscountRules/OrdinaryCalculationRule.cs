@@ -2,7 +2,7 @@
 
 namespace Models.DiscountRules
 {
-	public class OrdinaryDiscountRule : IDiscountRule
+	public class OrdinaryCalculationRule : ICalculationRule<CartItem>
 	{
 		public decimal Apply(CartItem cartItem)
 		{

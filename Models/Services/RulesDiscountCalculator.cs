@@ -9,7 +9,7 @@ namespace Models.Services
 	{
 		private IRulesRepository _rulesRepository;
 
-		public RulesDiscountCalculator( IRulesRepository rulesRepository)
+		public RulesDiscountCalculator(IRulesRepository rulesRepository)
 		{
 			_rulesRepository = rulesRepository;
 		}
@@ -22,7 +22,7 @@ namespace Models.Services
 			decimal sum = 0m;
 			foreach (var item in items)
 			{
-				var rule = _rulesRepository.GetByProductId(item.ProductId) ?? new OrdinaryDiscountRule();
+				var rule = _rulesRepository.GetByProductId(item.ProductId) ?? new OrdinaryCalculationRule();
 				sum += rule.Apply(item);
 			}
 			return sum;

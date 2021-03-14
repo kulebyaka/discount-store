@@ -2,9 +2,9 @@
 
 namespace Models.DiscountRules
 {
-	public interface IDiscountRule
+	public interface ICalculationRule<T>
 	{
-		decimal Apply(CartItem cartItem);
+		decimal Apply(T cartItem);
 
 		string GetName();
 	}
