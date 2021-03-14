@@ -17,7 +17,7 @@ namespace Models.DiscountRules
 
 		public decimal CalculateDiscountedPrice()
 		{
-			List<ICartItem> items = _cartItemsRepository.GetAll().ToList();
+			List<CartItem> items = _cartItemsRepository.GetAll().ToList();
 			if (!items.Any())
 				return 0;
 

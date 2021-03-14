@@ -4,7 +4,7 @@ namespace Models.DiscountRules
 {
 	public class OrdinaryDiscountRule : IDiscountRule
 	{
-		public decimal Apply(ICartItem cartItem)
+		public decimal Apply(CartItem cartItem)
 		{
 			return cartItem.Quantity * cartItem.Product.Price;
 		}

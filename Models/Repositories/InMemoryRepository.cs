@@ -6,7 +6,7 @@ namespace Models.Repositories
 	public class InMemoryRepository<T> : IRepository<T>
 	{
 		private readonly IList<object> _entities = new List<object>();
-		public T Get<T>(object id)
+		public T Get(int id)
 		{
 			return _entities.OfType<T>().SingleOrDefault(e => e.Equals(id));
 		}

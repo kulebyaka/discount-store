@@ -4,6 +4,6 @@ namespace Models.DiscountRules
 {
 	public interface IDiscountRule
 	{
-		decimal Apply(ICartItem cartItem);
+		decimal Apply(CartItem cartItem);
 	}
 }

@@ -13,7 +13,7 @@ namespace Models.DiscountRules
 			this._specialCost = specialCost;
 		}
 
-		public decimal Apply(ICartItem cartItem)
+		public decimal Apply(CartItem cartItem)
 		{
 			int quantity = cartItem.Quantity;
 			return (quantity / _specialCostQuantity)*_specialCost 
