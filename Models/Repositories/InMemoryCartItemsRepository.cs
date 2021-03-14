@@ -37,7 +37,7 @@ namespace Models.Repositories
 					{
 						ProductId = a.Key, 
 						Quantity = a.Value, 
-						Product = productRepository.Get(a.Key)
+						Product = productRepository.GetById(a.Key)
 					}).ToList();
 			return ret;
 		}

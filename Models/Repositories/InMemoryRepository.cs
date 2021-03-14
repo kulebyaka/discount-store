@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Models.Repositories
 {
@@ -11,7 +13,13 @@ namespace Models.Repositories
 		{
 			_entities = defaultCollection;
 		}
-		public T Get(int id)
+		
+		public IList<T> GetByQuery<TKey>(Expression<Func<T, bool>> prediction)
+		{
+			return _entities.Where(prediction.Compile()).ToList();
+		}
+
+		public T GetById<TKey>(TKey id)
 		{
 			return _entities.SingleOrDefault(e => e.Id.Equals(id));
 		}

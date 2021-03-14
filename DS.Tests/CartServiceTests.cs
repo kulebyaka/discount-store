@@ -34,8 +34,8 @@ namespace DS.Tests
 			_container.Register<IRulesRepository, RulesRepository>(Reuse.Singleton);
 			var inMemoryRules = new RulesRepository(new Dictionary<int, IDiscountRule>
 			{
-				{(int)ItemType.Mug, new PromoutionXForYRule(2, 1.5m)},
-				{(int)ItemType.Napkins, new PromoutionXForYRule(3, 0.9m)}
+				{(int)ItemType.Mug, new PromotionXForYRule(2, 1.5m)},
+				{(int)ItemType.Napkins, new PromotionXForYRule(3, 0.9m)}
 			});
 			_container.Use<IRulesRepository>(inMemoryRules);
 			_container.RegisterInstance(inMemoryRules);

@@ -3,13 +3,13 @@ using Models.Repositories;
 
 namespace Models.DiscountRules
 {
-	public class PromoutionXForYRule : IDiscountRule
+	public class PromotionXForYRule : IDiscountRule
 	{
 		private readonly int _specialCostQuantity;
 		private readonly decimal _specialCost;
 		private readonly string currencySymbol = RegionInfo.CurrentRegion.ISOCurrencySymbol;
 
-		public PromoutionXForYRule(int specialCostQuantity, decimal specialCost)
+		public PromotionXForYRule(int specialCostQuantity, decimal specialCost)
 		{
 			this._specialCostQuantity = specialCostQuantity;
 			this._specialCost = specialCost;
