@@ -1,17 +1,20 @@
-﻿using Models.DiscountRules;
+﻿using System.Linq;
+using Models.DiscountRules;
 using Models.Repositories;
 
 namespace Models.Services
 {
 	public class CartService : ICartService
 	{
-		private ICartItemsRepository _cartRepo;
-		private IDiscountCalculator discountCalculator;
+		private readonly IDiscountCalculator _discountCalculator;
+		private readonly ICartItemsRepository _cartRepo;
+		private readonly ICartItemsRepository _cartItemsRepository;
 
-		public CartService(IDiscountCalculator discountCalculator, ICartItemsRepository cartRepo)
+		public CartService(IDiscountCalculator discountCalculator, ICartItemsRepository cartRepo, ICartItemsRepository cartItemsRepository)
 		{
-			this.discountCalculator = discountCalculator;
+			this._discountCalculator = discountCalculator;
 			this._cartRepo = cartRepo;
+			_cartItemsRepository = cartItemsRepository;
 		}
 
 		public void Add(int productId)
@@ -26,7 +29,7 @@ namespace Models.Services
 
 		public decimal GetTotal()
 		{
-			return discountCalculator.CalculateDiscountedPrice();
+			return _discountCalculator.CalculateDiscountedPrice(_cartItemsRepository.GetAll().ToList());
 		}
 	}
 }

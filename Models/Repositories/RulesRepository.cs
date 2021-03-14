@@ -5,15 +5,16 @@ namespace Models.Repositories
 {
 	public class RulesRepository : IRulesRepository
 	{
-		private static readonly Dictionary<int, IDiscountRule> InMemory = new()
+		private readonly Dictionary<int, IDiscountRule> _inMemory;
+
+		public RulesRepository(Dictionary<int, IDiscountRule> inMemory)
 		{
-			{(int)ItemType.Mug, new PromoutionXForYRule(2, 1.5m)},
-			{(int)ItemType.Napkins, new PromoutionXForYRule(3, 0.9m)}
-		};
+			_inMemory = inMemory;
+		}
 
 		public IDiscountRule GetByProductId(int productId)
 		{
-			var exist = InMemory.TryGetValue(productId, out var retVal);
+			var exist = _inMemory.TryGetValue(productId, out var retVal);
 			return exist ? retVal : null;
 		}
 	}

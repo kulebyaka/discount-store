@@ -8,17 +8,14 @@ namespace Models.Services
 	public class RulesDiscountCalculator : IDiscountCalculator
 	{
 		private IRulesRepository _rulesRepository;
-		private ICartItemsRepository _cartItemsRepository;
 
-		public RulesDiscountCalculator(ICartItemsRepository cartItemsRepository, IRulesRepository rulesRepository)
+		public RulesDiscountCalculator( IRulesRepository rulesRepository)
 		{
-			_cartItemsRepository = cartItemsRepository;
 			_rulesRepository = rulesRepository;
 		}
 
-		public decimal CalculateDiscountedPrice()
+		public decimal CalculateDiscountedPrice(List<CartItem> items)
 		{
-			List<CartItem> items = _cartItemsRepository.GetAll().ToList();
 			if (!items.Any())
 				return 0;
 

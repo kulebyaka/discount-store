@@ -21,7 +21,6 @@ namespace DS.Tests
 			_container.Register<ICartService, CartService>();
 			_container.Register<ICartItemsRepository, InMemoryCartItemsRepository>(Reuse.Singleton);
 			_container.Register<IProductsRepository, InMemoryProductsRepository>(Reuse.Singleton);
-			
 			// compile-time known type
 			var inMemoryProductsRepository = new InMemoryProductsRepository(new List<Product>(){
 				new((int)ItemType.Vase, "Vase", 1.2m),
@@ -33,6 +32,13 @@ namespace DS.Tests
 			
 			_container.Register<IDiscountCalculator, RulesDiscountCalculator>();
 			_container.Register<IRulesRepository, RulesRepository>(Reuse.Singleton);
+			var inMemoryRules = new RulesRepository(new Dictionary<int, IDiscountRule>
+			{
+				{(int)ItemType.Mug, new PromoutionXForYRule(2, 1.5m)},
+				{(int)ItemType.Napkins, new PromoutionXForYRule(3, 0.9m)}
+			});
+			_container.Use<IRulesRepository>(inMemoryRules);
+			_container.RegisterInstance(inMemoryRules);
 
 		}
 
@@ -53,9 +59,9 @@ namespace DS.Tests
 		// TestCaseData
 		private static IEnumerable<TestCaseData> AddInput()
 		{
-			yield return new TestCaseData( new int[]{(int)ItemType.Mug, (int)ItemType.Mug, (int)ItemType.Mug}, 2.5m);
-			yield return new TestCaseData( new int[]{(int)ItemType.Mug}, 1m);
-			yield return new TestCaseData( new int[]{(int)ItemType.Vase, (int)ItemType.Mug, (int)ItemType.Mug}, 2.7m);
+			yield return new TestCaseData( new[]{(int)ItemType.Mug, (int)ItemType.Mug, (int)ItemType.Mug}, 2.5m);
+			yield return new TestCaseData( new[]{(int)ItemType.Mug}, 1m);
+			yield return new TestCaseData( new[]{(int)ItemType.Vase, (int)ItemType.Mug, (int)ItemType.Mug}, 2.7m);
 		}
 	}
 	
