@@ -4,37 +4,26 @@ namespace Models
 {
     public interface ICartService
     {
-        void Add(Item item);
-        void Remove(Item item);
-        double GetTotal();
+        void Add(int productId);
+        void Remove(int productId);
+        decimal GetTotal();
     }
 
     public class CartService : ICartService
     {
-        private double _counter = 0; 
-        public void Add(Item item)
-        {
-            _counter += item.Price;
-        }
-
-        public void Remove(Item item)
+        public void Add(int productId)
         {
             throw new NotImplementedException();
         }
 
-        public double GetTotal()
+        public void Remove(int productId)
         {
-            return _counter;
-        }
-    }
-
-    public class Item
-    {
-        public readonly double Price;
-        public Item(double price)
-        {
-            Price = price;
+            throw new NotImplementedException();
         }
 
+        public decimal GetTotal()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
