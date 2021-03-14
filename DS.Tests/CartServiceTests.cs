@@ -19,23 +19,25 @@ namespace DS.Tests
 		}
 
 		[Test, TestCaseSource(nameof(AddInput))]
-		public void GetTotalTest(decimal total)
+		public void GetTotalTest(int[] productIds, decimal total)
 		{
 			var service = _container.Resolve<ICartService>();
 
-			service.Add((int)ItemType.Mug);
-			service.Add((int)ItemType.Mug);
-			service.Add((int)ItemType.Mug);
-			service.Add((int)ItemType.Vase);
-			service.Add((int)ItemType.Mug);
+			foreach (int productId in productIds)
+			{
+				service.Add(productId);
+			}
 
-			service.GetTotal().Should().Be(total);
+			var serviceTotal = service.GetTotal();
+			serviceTotal.Should().Be(total);
 		}
 		
 		// TestCaseData
 		private static IEnumerable<TestCaseData> AddInput()
 		{
-			yield return null; //new TestCaseData(x, 9);
+			yield return new TestCaseData( new int[]{(int)ItemType.Mug, (int)ItemType.Mug, (int)ItemType.Mug}, 2.5m);
+			yield return new TestCaseData( new int[]{(int)ItemType.Mug}, 1m);
+			yield return new TestCaseData( new int[]{(int)ItemType.Vase, (int)ItemType.Mug, (int)ItemType.Mug}, 2.7m);
 		}
 	}
 	
