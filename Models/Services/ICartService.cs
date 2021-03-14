@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace Models.Services
 {
     public interface ICartService
     {

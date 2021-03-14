@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Models.DiscountRules;
 using Models.Repositories;
 
-namespace Models.DiscountRules
+namespace Models.Services
 {
 	public class RulesDiscountCalculator : IDiscountCalculator
 	{
@@ -21,7 +22,7 @@ namespace Models.DiscountRules
 			if (!items.Any())
 				return 0;
 
-			var sum = 0m;
+			decimal sum = 0m;
 			foreach (var item in items)
 			{
 				var rule = _rulesRepository.GetByProductId(item.ProductId) ?? new OrdinaryDiscountRule();

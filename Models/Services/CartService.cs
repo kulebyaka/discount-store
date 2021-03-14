@@ -1,7 +1,7 @@
 ﻿using Models.DiscountRules;
 using Models.Repositories;
 
-namespace Models
+namespace Models.Services
 {
 	public class CartService : ICartService
 	{

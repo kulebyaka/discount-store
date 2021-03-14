@@ -1,4 +1,4 @@
-﻿namespace Models.DiscountRules
+﻿namespace Models.Services
 {
 	public interface IDiscountCalculator
 	{

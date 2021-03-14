@@ -4,6 +4,7 @@ using FluentAssertions;
 using Models;
 using Models.DiscountRules;
 using Models.Repositories;
+using Models.Services;
 using NUnit.Framework;
 
 namespace DS.Tests
