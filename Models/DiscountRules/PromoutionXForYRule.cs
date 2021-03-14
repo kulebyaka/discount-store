@@ -1,4 +1,5 @@
-﻿using Models.Repositories;
+﻿using System.Globalization;
+using Models.Repositories;
 
 namespace Models.DiscountRules
 {
@@ -6,6 +7,7 @@ namespace Models.DiscountRules
 	{
 		private readonly int _specialCostQuantity;
 		private readonly decimal _specialCost;
+		private readonly string currencySymbol = RegionInfo.CurrentRegion.ISOCurrencySymbol;
 
 		public PromoutionXForYRule(int specialCostQuantity, decimal specialCost)
 		{
@@ -18,6 +20,11 @@ namespace Models.DiscountRules
 			int quantity = cartItem.Quantity;
 			return (quantity / _specialCostQuantity)*_specialCost 
 			       + (quantity%_specialCostQuantity)*cartItem.Product.Price;
+		}
+
+		public string GetName()
+		{
+			return $"Promotion {_specialCostQuantity} for {_specialCost}{currencySymbol}";
 		}
 	}
 }

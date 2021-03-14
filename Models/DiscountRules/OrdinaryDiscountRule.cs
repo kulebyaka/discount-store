@@ -8,5 +8,10 @@ namespace Models.DiscountRules
 		{
 			return cartItem.Quantity * cartItem.Product.Price;
 		}
+
+		public string GetName()
+		{
+			return "Quantity * Price calculation rule";
+		}
 	}
 }
