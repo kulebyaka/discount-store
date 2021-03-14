@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using DryIoc;
 using FluentAssertions;
 using Models;
+using Models.DiscountRules;
+using Models.Repositories;
 using NUnit.Framework;
 
 namespace DS.Tests
@@ -16,6 +18,21 @@ namespace DS.Tests
 		{
 			_container = new Container();
 			_container.Register<ICartService, CartService>();
+			_container.Register<ICartItemsRepository, InMemoryCartItemsRepository>(Reuse.Singleton);
+			_container.Register<IProductsRepository, InMemoryProductsRepository>(Reuse.Singleton);
+			
+			// compile-time known type
+			var inMemoryProductsRepository = new InMemoryProductsRepository(new List<Product>(){
+				new((int)ItemType.Vase, "Vase", 1.2m),
+				new((int)ItemType.Mug, "Big mug", 1m),
+				new((int)ItemType.Napkins, "Napkins pack", 0.45m),
+			});
+			_container.Use<IProductsRepository>(inMemoryProductsRepository);
+			_container.RegisterInstance(inMemoryProductsRepository);
+			
+			_container.Register<IDiscountCalculator, RulesDiscountCalculator>();
+			_container.Register<IRulesRepository, RulesRepository>(Reuse.Singleton);
+
 		}
 
 		[Test, TestCaseSource(nameof(AddInput))]

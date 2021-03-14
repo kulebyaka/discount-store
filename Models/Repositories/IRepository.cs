@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-
-namespace Models.Repositories
+﻿namespace Models.Repositories
 {
-	public interface IRepository<T>
+	public interface IRepository<out T>
 	{
 		T Get(int id);
 	}

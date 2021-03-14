@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace Models.Repositories
 {
-	public class CartItemsRepository : ICartItemsRepository
+	public class InMemoryCartItemsRepository : ICartItemsRepository
 	{
 		private IProductsRepository productRepository;
 
 		private IDictionary<int, int> inMemory = new Dictionary<int, int>();
-		public CartItemsRepository(IProductsRepository productRepository)
+		public InMemoryCartItemsRepository(IProductsRepository productRepository)
 		{
 			this.productRepository = productRepository;
 		}
@@ -31,7 +31,15 @@ namespace Models.Repositories
 
 		public IEnumerable<CartItem> GetAll()
 		{
-			return inMemory.Where(a => a.Value > 0).Select(a => new CartItem {ProductId = a.Key, Quantity = a.Value, Product = productRepository.Get(a.Key)}).ToList();
+			var ret = inMemory.Where(a => a.Value > 0)
+				.Select(a => 
+					new CartItem
+					{
+						ProductId = a.Key, 
+						Quantity = a.Value, 
+						Product = productRepository.Get(a.Key)
+					}).ToList();
+			return ret;
 		}
 	}
 }

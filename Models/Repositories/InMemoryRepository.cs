@@ -34,6 +34,6 @@ namespace Models.Repositories
 
 	public interface IDbEntity
 	{
-		public int Id { get; set; }
+		public int Id { get; }
 	}
 }

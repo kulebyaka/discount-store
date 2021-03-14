@@ -1,16 +1,18 @@
-﻿namespace Models
-{
-	public class Product
-	{
-		public readonly int Id;
-		public readonly string Name;
-		public readonly decimal Price;
+﻿using Models.Repositories;
 
-		protected Product(decimal price, string name, int id)
+namespace Models
+{
+	public class Product : IDbEntity
+	{
+		public int Id { get;}
+		public string Name { get; }
+		public decimal Price { get; }
+
+		public Product(int id, string name, decimal price)
 		{
-			Price = price;
-			Name = name;
 			Id = id;
+			Name = name;
+			Price = price;
 		}
 	}
 }
