@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace DS.Tests
 {
 	public enum ItemType
 	{
