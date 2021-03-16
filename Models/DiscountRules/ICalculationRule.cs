@@ -1,6 +1,4 @@
-﻿using Models.Repositories;
-
-namespace Models.DiscountRules
+﻿namespace Models.DiscountRules
 {
 	public interface ICalculationRule<T>
 	{
