@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Models.Repositories;
+using DS.BusinessLogic.Repositories;
 
-namespace Models.Services
+namespace DS.BusinessLogic.Services
 {
 	public interface IDiscountCalculator
 	{

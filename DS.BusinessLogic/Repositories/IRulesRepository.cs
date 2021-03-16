@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Models.DiscountRules;
+using DS.BusinessLogic.DiscountRules;
 
-namespace Models.Repositories
+namespace DS.BusinessLogic.Repositories
 {
 	public interface IRulesRepository
 	{

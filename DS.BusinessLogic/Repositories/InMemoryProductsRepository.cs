@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Models.Repositories
+namespace DS.BusinessLogic.Repositories
 {
 	public class InMemoryProductsRepository : InMemoryRepository<Product>, IProductsRepository
 	{

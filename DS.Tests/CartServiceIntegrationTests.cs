@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using DryIoc;
 using FluentAssertions;
-using Models;
-using Models.DiscountRules;
-using Models.Repositories;
-using Models.Services;
+using DS.BusinessLogic;
+using DS.BusinessLogic.DiscountRules;
+using DS.BusinessLogic.Repositories;
+using DS.BusinessLogic.Services;
 using NUnit.Framework;
 
 namespace DS.Tests

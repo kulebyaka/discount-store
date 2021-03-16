@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DS.BusinessLogic.DiscountRules;
+using DS.BusinessLogic.Repositories;
 using Microsoft.Extensions.Logging;
-using Models.DiscountRules;
-using Models.Repositories;
 
-namespace Models.Services
+namespace DS.BusinessLogic.Services
 {
 	public class RulesDiscountCalculator : IDiscountCalculator
 	{

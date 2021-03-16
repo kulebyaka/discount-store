@@ -1,7 +1,7 @@
-﻿using Models.DiscountRules;
-using Models.Repositories;
+﻿using DS.BusinessLogic.DiscountRules;
+using DS.BusinessLogic.Repositories;
 
-namespace Models
+namespace DS.BusinessLogic
 {
 	public class Product : IDbEntity
 	{

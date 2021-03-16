@@ -1,9 +1,9 @@
 ﻿using System.Linq;
+using DS.BusinessLogic.Repositories;
 using Microsoft.Extensions.Logging;
-using Models.DiscountRules;
-using Models.Repositories;
+using DS.BusinessLogic.DiscountRules;
 
-namespace Models.Services
+namespace DS.BusinessLogic.Services
 {
 	public class CartService : ICartService
 	{

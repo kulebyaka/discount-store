@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Models\Models.csproj" />
+      <ProjectReference Include="..\DS.BusinessLogic\DS.BusinessLogic.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{D29A690F-0885-4D6B-A77F-9F7FE630178F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.BusinessLogic", "DS.BusinessLogic\DS.BusinessLogic.csproj", "{D29A690F-0885-4D6B-A77F-9F7FE630178F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.Tests", "DS.Tests\DS.Tests.csproj", "{EADDA1BE-B648-4C7D-9ECD-5AD7C5C8CAF8}"
 EndProject

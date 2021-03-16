@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using DryIoc;
 using FluentAssertions;
-using Models.DiscountRules;
-using Models.Repositories;
-using Models.Services;
+using DS.BusinessLogic.DiscountRules;
+using DS.BusinessLogic.Repositories;
+using DS.BusinessLogic.Services;
 using Moq;
 using NUnit.Framework;
 

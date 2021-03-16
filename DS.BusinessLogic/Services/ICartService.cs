@@ -1,4 +1,4 @@
-﻿namespace Models.Services
+﻿namespace DS.BusinessLogic.Services
 {
 	public interface ICartService
 	{

@@ -1,4 +1,4 @@
-﻿namespace Models.DiscountRules
+﻿namespace DS.BusinessLogic.DiscountRules
 {
 	public interface ICalculationRule<T>
 	{

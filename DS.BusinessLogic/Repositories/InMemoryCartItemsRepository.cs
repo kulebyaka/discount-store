@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Models.Repositories
+namespace DS.BusinessLogic.Repositories
 {
 	public class InMemoryCartItemsRepository : ICartItemsRepository
 	{

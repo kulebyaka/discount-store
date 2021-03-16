@@ -1,6 +1,6 @@
-﻿using Models.Repositories;
+﻿using DS.BusinessLogic.Repositories;
 
-namespace Models.DiscountRules
+namespace DS.BusinessLogic.DiscountRules
 {
 	public class OrdinaryCalculationRule : ICalculationRule<CartItem>
 	{

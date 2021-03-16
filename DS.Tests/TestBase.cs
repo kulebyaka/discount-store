@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using DryIoc;
 using Microsoft.Extensions.Logging;
-using Models.Repositories;
+using DS.BusinessLogic.Repositories;
 using Moq;
 
 namespace DS.Tests
