@@ -5,6 +5,6 @@ namespace Models.Services
 {
 	public interface IDiscountCalculator
 	{
-		public decimal CalculateDiscountedPrice(List<CartItem> items);
+		public decimal CalculateDiscountedPrice(IEnumerable<CartItem> items);
 	}
 }
