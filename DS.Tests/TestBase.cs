@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using DryIoc;
-using Microsoft.Extensions.Logging;
 using DS.BusinessLogic.Repositories;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace DS.Tests
@@ -12,13 +13,14 @@ namespace DS.Tests
 	public abstract class TestBase
 	{
 		protected readonly List<string> logMessages = new();
+
+		protected Container Container { get; set; }
+
 		public virtual void Setup()
 		{
 			Container = new Container();
 			RegisterCommonServices();
 		}
-
-		protected Container Container { get; set; }
 
 		private void RegisterCommonServices()
 		{
@@ -27,7 +29,7 @@ namespace DS.Tests
 		protected static TRepository CreateRepository<TRepository, TItem>(Func<IList<TItem>> itemListProvider) where TItem : class
 			where TRepository : class, IRepository<TItem>
 		{
-			Mock<TRepository> repositoryMock = new Mock<TRepository>();
+			var repositoryMock = new Mock<TRepository>();
 
 			repositoryMock.Setup(repo => repo.Add(It.IsAny<TItem>()))
 				.Callback((TItem item) => { itemListProvider().Add(item); });
@@ -62,11 +64,11 @@ namespace DS.Tests
 					(Func<It.IsAnyType, Exception, string>) It.IsAny<object>()))
 				.Callback(new InvocationAction(invocation =>
 				{
-					var state = invocation.Arguments[2];
+					object state = invocation.Arguments[2];
 					var exception = (Exception?) invocation.Arguments[3];
-					var formatter = invocation.Arguments[4];
-					var invokeMethod = formatter.GetType().GetMethod("Invoke");
-					var logMessage = (string?) invokeMethod?.Invoke(formatter, new[] {state, exception});
+					object formatter = invocation.Arguments[4];
+					MethodInfo invokeMethod = formatter.GetType().GetMethod("Invoke");
+					string logMessage = (string?) invokeMethod?.Invoke(formatter, new[] {state, exception});
 
 					logProvider.Invoke(logMessage);
 				}));

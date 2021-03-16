@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using DS.BusinessLogic.DiscountRules;
+﻿using DS.BusinessLogic.DiscountRules;
+using DS.BusinessLogic.Models;
 
 namespace DS.BusinessLogic.Repositories
 {

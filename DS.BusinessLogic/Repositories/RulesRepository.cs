@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DS.BusinessLogic.DiscountRules;
+using DS.BusinessLogic.Models;
 
 namespace DS.BusinessLogic.Repositories
 {
@@ -14,7 +15,7 @@ namespace DS.BusinessLogic.Repositories
 
 		public ICalculationRule<CartItem, decimal> GetByProductId(int productId)
 		{
-			var exist = _inMemory.TryGetValue(productId, out var retVal);
+			bool exist = _inMemory.TryGetValue(productId, out ICalculationRule<CartItem, decimal> retVal);
 			return exist ? retVal : null;
 		}
 	}

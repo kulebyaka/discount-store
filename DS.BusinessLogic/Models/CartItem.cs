@@ -1,4 +1,4 @@
-﻿namespace DS.BusinessLogic.Repositories
+﻿namespace DS.BusinessLogic.Models
 {
 	public class CartItem
 	{

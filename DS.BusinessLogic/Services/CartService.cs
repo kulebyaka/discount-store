@@ -1,15 +1,14 @@
 ﻿using System.Linq;
 using DS.BusinessLogic.Repositories;
 using Microsoft.Extensions.Logging;
-using DS.BusinessLogic.DiscountRules;
 
 namespace DS.BusinessLogic.Services
 {
 	public class CartService : ICartService
 	{
-		private readonly IPriceCalculator _priceCalculator;
 		private readonly ICartItemsRepository _cartItemsRepository;
 		private readonly ILogger<CartService> _logger;
+		private readonly IPriceCalculator _priceCalculator;
 
 		public CartService(IPriceCalculator priceCalculator, ICartItemsRepository cartItemsRepository, ILogger<CartService> logger)
 		{

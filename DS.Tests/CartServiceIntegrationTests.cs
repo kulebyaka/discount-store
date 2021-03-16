@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using DryIoc;
-using FluentAssertions;
-using DS.BusinessLogic;
 using DS.BusinessLogic.DiscountRules;
+using DS.BusinessLogic.Models;
 using DS.BusinessLogic.Repositories;
 using DS.BusinessLogic.Services;
+using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 namespace DS.Tests
@@ -21,11 +23,11 @@ namespace DS.Tests
 			Container.Register<ICartItemsRepository, InMemoryCartItemsRepository>(Reuse.Singleton);
 			Container.Register<IProductsRepository, InMemoryProductsRepository>(Reuse.Singleton);
 			// compile-time known type
-			var inMemoryProductsRepository = new InMemoryProductsRepository(new List<Product>()
+			var inMemoryProductsRepository = new InMemoryProductsRepository(new List<Product>
 			{
 				new((int) ItemType.Vase, "Vase", 1.2m),
 				new((int) ItemType.Mug, "Big mug", 1m),
-				new((int) ItemType.Napkins, "Napkins pack", 0.45m),
+				new((int) ItemType.Napkins, "Napkins pack", 0.45m)
 			});
 			Container.Use<IProductsRepository>(inMemoryProductsRepository);
 			Container.RegisterInstance(inMemoryProductsRepository);
@@ -40,27 +42,26 @@ namespace DS.Tests
 			});
 			Container.Use<IRulesRepository>(inMemoryRules);
 			Container.RegisterInstance(inMemoryRules);
-			
-			var cartServiceLogger = CreateLogger<CartService>(a => logMessages.Add(a));
+
+			Mock<ILogger<CartService>> cartServiceLogger = CreateLogger<CartService>(a => logMessages.Add(a));
 			Container.Use(cartServiceLogger.Object);
 			Container.RegisterInstance(cartServiceLogger.Object);
-			
-			var priceCalculatorLogger = CreateLogger<PriceCalculator>(a => logMessages.Add(a));
+
+			Mock<ILogger<PriceCalculator>> priceCalculatorLogger = CreateLogger<PriceCalculator>(a => logMessages.Add(a));
 			Container.Use(priceCalculatorLogger.Object);
 			Container.RegisterInstance(priceCalculatorLogger.Object);
 		}
 
-		[Test, TestCaseSource(nameof(AddInput))]
+		[Test]
+		[TestCaseSource(nameof(AddInput))]
 		public void GetTotalTest(int[] productIds, decimal total)
 		{
 			var service = Container.Resolve<ICartService>();
 
 			foreach (int productId in productIds)
-			{
 				service.Add(productId);
-			}
 
-			var serviceTotal = service.GetTotal();
+			decimal serviceTotal = service.GetTotal();
 			serviceTotal.Should().Be(total);
 		}
 

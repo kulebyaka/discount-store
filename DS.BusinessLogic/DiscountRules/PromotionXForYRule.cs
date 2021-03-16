@@ -1,20 +1,21 @@
 ﻿using System.Globalization;
-using DS.BusinessLogic.Repositories;
+using DS.BusinessLogic.Models;
 
 namespace DS.BusinessLogic.DiscountRules
 {
 	/// <summary>
-	/// Special offer when multiple items are bought. 
+	///     Special offer when multiple items are bought.
 	/// </summary>
-	///<example>To define the rule "2 mugs for 1.5€” use the following code: 
-	/// <code>
-	///  new PromotionXForYRule(2, 1.5m);
-	/// </code>
-	///</example>
+	/// <example>
+	///     To define the rule "2 mugs for 1.5€” use the following code:
+	///     <code>
+	///			new PromotionXForYRule(2, 1.5m);
+	///		</code>
+	/// </example>
 	public class PromotionXForYRule : ICalculationRule<CartItem, decimal>
 	{
-		private readonly int _specialCostQuantity;
 		private readonly decimal _specialCost;
+		private readonly int _specialCostQuantity;
 		private readonly string currencySymbol = RegionInfo.CurrentRegion.ISOCurrencySymbol;
 
 		public PromotionXForYRule(int specialCostQuantity, decimal specialCost)

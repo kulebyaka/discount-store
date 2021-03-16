@@ -1,10 +1,10 @@
-﻿using DS.BusinessLogic.Repositories;
+﻿using DS.BusinessLogic.Models;
 
 namespace DS.BusinessLogic.DiscountRules
 {
 	/// <summary>
-	/// Default calculation rule.
-	/// Multiplying the quantity of product by its cost
+	///     Default calculation rule.
+	///     Multiplying the quantity of product by its cost
 	/// </summary>
 	public class OrdinaryCalculationRule : ICalculationRule<CartItem, decimal>
 	{

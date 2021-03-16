@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DS.BusinessLogic.Models;
 
 namespace DS.BusinessLogic.Repositories
 {
@@ -8,7 +9,7 @@ namespace DS.BusinessLogic.Repositories
 	{
 		private readonly IProductsRepository _productRepository;
 
-		private IDictionary<int, int> inMemory = new Dictionary<int, int>();
+		private readonly IDictionary<int, int> inMemory = new Dictionary<int, int>();
 
 		public InMemoryCartItemsRepository(IProductsRepository productRepository)
 		{
@@ -32,7 +33,7 @@ namespace DS.BusinessLogic.Repositories
 
 		public IEnumerable<CartItem> GetAll()
 		{
-			var currentItems = inMemory.Where(a => a.Value > 0);
+			IEnumerable<KeyValuePair<int, int>> currentItems = inMemory.Where(a => a.Value > 0);
 			Dictionary<int, decimal> products = _productRepository
 				.GetByQuery(pr => currentItems.Select(kv => kv.Key)
 					.Contains(pr.Id)).ToDictionary(a => a.Id, a => a.Price);
