@@ -21,21 +21,22 @@ namespace DS.Tests
 			Container.Register<ICartItemsRepository, InMemoryCartItemsRepository>(Reuse.Singleton);
 			Container.Register<IProductsRepository, InMemoryProductsRepository>(Reuse.Singleton);
 			// compile-time known type
-			var inMemoryProductsRepository = new InMemoryProductsRepository(new List<Product>(){
-				new((int)ItemType.Vase, "Vase", 1.2m),
-				new((int)ItemType.Mug, "Big mug", 1m,  new PromotionXForYRule(2, 1.5m)),
-				new((int)ItemType.Napkins, "Napkins pack", 0.45m, new PromotionXForYRule(3, 0.9m)),
+			var inMemoryProductsRepository = new InMemoryProductsRepository(new List<Product>()
+			{
+				new((int) ItemType.Vase, "Vase", 1.2m),
+				new((int) ItemType.Mug, "Big mug", 1m, new PromotionXForYRule(2, 1.5m)),
+				new((int) ItemType.Napkins, "Napkins pack", 0.45m, new PromotionXForYRule(3, 0.9m)),
 			});
 			Container.Use<IProductsRepository>(inMemoryProductsRepository);
 			Container.RegisterInstance(inMemoryProductsRepository);
-			
+
 			Container.Register<IDiscountCalculator, RulesDiscountCalculator>();
-			
+
 			Container.Register<IRulesRepository, RulesRepository>(Reuse.Singleton);
 			var inMemoryRules = new RulesRepository(new Dictionary<int, ICalculationRule<CartItem>>
 			{
-				{(int)ItemType.Mug, new PromotionXForYRule(2, 1.5m)},
-				{(int)ItemType.Napkins, new PromotionXForYRule(3, 0.9m)}
+				{(int) ItemType.Mug, new PromotionXForYRule(2, 1.5m)},
+				{(int) ItemType.Napkins, new PromotionXForYRule(3, 0.9m)}
 			});
 			Container.Use<IRulesRepository>(inMemoryRules);
 			Container.RegisterInstance(inMemoryRules);
@@ -54,14 +55,13 @@ namespace DS.Tests
 			var serviceTotal = service.GetTotal();
 			serviceTotal.Should().Be(total);
 		}
-		
+
 		// TestCaseData
 		private static IEnumerable<TestCaseData> AddInput()
 		{
-			yield return new TestCaseData( new[]{(int)ItemType.Mug, (int)ItemType.Mug, (int)ItemType.Mug}, 2.5m);
-			yield return new TestCaseData( new[]{(int)ItemType.Mug}, 1m);
-			yield return new TestCaseData( new[]{(int)ItemType.Vase, (int)ItemType.Mug, (int)ItemType.Mug}, 2.7m);
+			yield return new TestCaseData(new[] {(int) ItemType.Mug, (int) ItemType.Mug, (int) ItemType.Mug}, 2.5m);
+			yield return new TestCaseData(new[] {(int) ItemType.Mug}, 1m);
+			yield return new TestCaseData(new[] {(int) ItemType.Vase, (int) ItemType.Mug, (int) ItemType.Mug}, 2.7m);
 		}
 	}
-	
 }

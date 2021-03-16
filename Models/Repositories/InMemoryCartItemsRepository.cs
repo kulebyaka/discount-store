@@ -9,9 +9,10 @@ namespace Models.Repositories
 		private readonly IProductsRepository _productRepository;
 
 		private IDictionary<int, int> inMemory = new Dictionary<int, int>();
+
 		public InMemoryCartItemsRepository(IProductsRepository productRepository)
 		{
-			this._productRepository = productRepository;
+			_productRepository = productRepository;
 		}
 
 		public void Add(int productId)
@@ -33,14 +34,14 @@ namespace Models.Repositories
 		{
 			var currentItems = inMemory.Where(a => a.Value > 0);
 			Dictionary<int, decimal> products = _productRepository
-				.GetByQuery(pr=> currentItems.Select(kv => kv.Key)
-				.Contains(pr.Id)).ToDictionary(a=>a.Id, a=>a.Price);
+				.GetByQuery(pr => currentItems.Select(kv => kv.Key)
+					.Contains(pr.Id)).ToDictionary(a => a.Id, a => a.Price);
 			List<CartItem> ret = currentItems
-				.Select(a => 
+				.Select(a =>
 					new CartItem
 					{
-						ProductId = a.Key, 
-						Quantity = a.Value, 
+						ProductId = a.Key,
+						Quantity = a.Value,
 						Price = products[a.Key]
 					}).ToList();
 			return ret;

@@ -4,6 +4,6 @@
 	{
 		Vase,
 		Mug,
-		Napkins 
+		Napkins
 	}
 }

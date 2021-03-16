@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Models.Repositories
 {
-	public class InMemoryRepository<T> : IRepository<T> where T : IDbEntity 
+	public class InMemoryRepository<T> : IRepository<T> where T : IDbEntity
 	{
 		private readonly IList<T> _entities;
 
@@ -13,7 +13,7 @@ namespace Models.Repositories
 		{
 			_entities = defaultCollection;
 		}
-		
+
 		public IList<T> GetByQuery(Expression<Func<T, bool>> prediction)
 		{
 			return _entities.Where(prediction.Compile()).ToList();
@@ -28,7 +28,7 @@ namespace Models.Repositories
 		{
 			return _entities;
 		}
-		
+
 		public void Add(T item)
 		{
 			_entities.Add(item);

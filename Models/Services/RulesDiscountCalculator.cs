@@ -30,6 +30,7 @@ namespace Models.Services
 				ICalculationRule<CartItem> rule = _rulesRepository.GetByProductId(item.ProductId) ?? new OrdinaryCalculationRule();
 				sum += rule.Apply(item);
 			}
+
 			return sum;
 		}
 	}
