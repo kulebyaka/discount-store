@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DryIoc;
 using FluentAssertions;
 using DS.BusinessLogic.DiscountRules;
@@ -10,16 +11,15 @@ using NUnit.Framework;
 namespace DS.Tests
 {
 	[TestFixture]
-	public class DiscountCalculatorTestFixture : TestBase
+	public class PriceCalculatorTestFixture : TestBase
 	{
-		private readonly List<string> logMessages = new();
-		private Dictionary<int, ICalculationRule<CartItem>> _rules = new();
+		private Dictionary<int, ICalculationRule<CartItem, decimal>> _rules = new();
 
 		[SetUp]
 		public override void Setup()
 		{
 			base.Setup();
-			Container.Register<IDiscountCalculator, RulesDiscountCalculator>();
+			Container.Register<IPriceCalculator, PriceCalculator>();
 			Mock<IRulesRepository> rulesRepository = new Mock<IRulesRepository>();
 			rulesRepository.Setup(calculator => calculator.GetByProductId(It.IsAny<int>()))
 				.Returns((int a) =>
@@ -30,18 +30,18 @@ namespace DS.Tests
 			Container.Use(rulesRepository.Object);
 			Container.RegisterInstance(rulesRepository.Object);
 
-			var logger = CreateLogger<RulesDiscountCalculator>(a => logMessages.Add(a));
+			var logger = CreateLogger<PriceCalculator>(a => logMessages.Add(a));
 			Container.Use(logger.Object);
 			Container.RegisterInstance(logger.Object);
 		}
 
 		[Test, TestCaseSource(nameof(AddInput))]
-		public void CalculateDiscountedPriceTest(IEnumerable<CartItem> items, Dictionary<int, ICalculationRule<CartItem>> rules, decimal result)
+		public void CalculateDiscountedPriceTest(IEnumerable<CartItem> items, Dictionary<int, ICalculationRule<CartItem, decimal>> rules, decimal result)
 		{
-			var service = Container.Resolve<IDiscountCalculator>();
+			var service = Container.Resolve<IPriceCalculator>();
 			_rules = rules;
 
-			decimal total = service.CalculateDiscountedPrice(items);
+			decimal total = service.Calculate(items.ToList());
 
 			result.Should().Be(total);
 			logMessages.Should().HaveCountGreaterThan(0);
@@ -55,7 +55,7 @@ namespace DS.Tests
 				{
 					new CartItem() {ProductId = 1, Price = 2, Quantity = 2}
 				},
-				new Dictionary<int, ICalculationRule<CartItem>>
+				new Dictionary<int, ICalculationRule<CartItem, decimal>>
 				{
 					{1, new OrdinaryCalculationRule()}
 				},
@@ -67,7 +67,7 @@ namespace DS.Tests
 				{
 					new CartItem() {ProductId = 1, Price = 2, Quantity = 2}
 				},
-				new Dictionary<int, ICalculationRule<CartItem>>
+				new Dictionary<int, ICalculationRule<CartItem, decimal>>
 				{
 				},
 				4m);
@@ -89,7 +89,7 @@ namespace DS.Tests
 						Quantity = 2
 					}
 				},
-				new Dictionary<int, ICalculationRule<CartItem>>
+				new Dictionary<int, ICalculationRule<CartItem, decimal>>
 				{
 				},
 				8m);
@@ -105,7 +105,7 @@ namespace DS.Tests
 						Quantity = 6
 					},
 				},
-				new Dictionary<int, ICalculationRule<CartItem>>
+				new Dictionary<int, ICalculationRule<CartItem, decimal>>
 				{
 					{1, new PromotionXForYRule(3, 1)},
 				},
@@ -122,7 +122,7 @@ namespace DS.Tests
 						Quantity = 7
 					},
 				},
-				new Dictionary<int, ICalculationRule<CartItem>>
+				new Dictionary<int, ICalculationRule<CartItem, decimal>>
 				{
 					{1, new PromotionXForYRule(3, 1)},
 				},

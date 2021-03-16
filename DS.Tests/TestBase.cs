@@ -11,6 +11,7 @@ namespace DS.Tests
 {
 	public abstract class TestBase
 	{
+		protected readonly List<string> logMessages = new();
 		public virtual void Setup()
 		{
 			Container = new Container();

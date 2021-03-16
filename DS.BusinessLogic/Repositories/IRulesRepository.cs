@@ -5,6 +5,6 @@ namespace DS.BusinessLogic.Repositories
 {
 	public interface IRulesRepository
 	{
-		ICalculationRule<CartItem> GetByProductId(int productId);
+		ICalculationRule<CartItem, decimal> GetByProductId(int productId);
 	}
 }

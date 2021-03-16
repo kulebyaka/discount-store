@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace DS.Tests
 {
 	[TestFixture]
-	[Parallelizable(ParallelScope.All)]
+	[Parallelizable(ParallelScope.Self)]
 	public class CartServiceIntegrationTests : TestBase
 	{
 		[SetUp]
@@ -24,22 +24,30 @@ namespace DS.Tests
 			var inMemoryProductsRepository = new InMemoryProductsRepository(new List<Product>()
 			{
 				new((int) ItemType.Vase, "Vase", 1.2m),
-				new((int) ItemType.Mug, "Big mug", 1m, new PromotionXForYRule(2, 1.5m)),
-				new((int) ItemType.Napkins, "Napkins pack", 0.45m, new PromotionXForYRule(3, 0.9m)),
+				new((int) ItemType.Mug, "Big mug", 1m),
+				new((int) ItemType.Napkins, "Napkins pack", 0.45m),
 			});
 			Container.Use<IProductsRepository>(inMemoryProductsRepository);
 			Container.RegisterInstance(inMemoryProductsRepository);
 
-			Container.Register<IDiscountCalculator, RulesDiscountCalculator>();
+			Container.Register<IPriceCalculator, PriceCalculator>();
 
 			Container.Register<IRulesRepository, RulesRepository>(Reuse.Singleton);
-			var inMemoryRules = new RulesRepository(new Dictionary<int, ICalculationRule<CartItem>>
+			var inMemoryRules = new RulesRepository(new Dictionary<int, ICalculationRule<CartItem, decimal>>
 			{
 				{(int) ItemType.Mug, new PromotionXForYRule(2, 1.5m)},
 				{(int) ItemType.Napkins, new PromotionXForYRule(3, 0.9m)}
 			});
 			Container.Use<IRulesRepository>(inMemoryRules);
 			Container.RegisterInstance(inMemoryRules);
+			
+			var cartServiceLogger = CreateLogger<CartService>(a => logMessages.Add(a));
+			Container.Use(cartServiceLogger.Object);
+			Container.RegisterInstance(cartServiceLogger.Object);
+			
+			var priceCalculatorLogger = CreateLogger<PriceCalculator>(a => logMessages.Add(a));
+			Container.Use(priceCalculatorLogger.Object);
+			Container.RegisterInstance(priceCalculatorLogger.Object);
 		}
 
 		[Test, TestCaseSource(nameof(AddInput))]

@@ -2,9 +2,13 @@
 
 namespace DS.BusinessLogic.DiscountRules
 {
-	public class OrdinaryCalculationRule : ICalculationRule<CartItem>
+	/// <summary>
+	/// Default calculation rule.
+	/// Multiplying the quantity of product by its cost
+	/// </summary>
+	public class OrdinaryCalculationRule : ICalculationRule<CartItem, decimal>
 	{
-		public decimal Apply(CartItem cartItem)
+		public decimal Calculate(CartItem cartItem)
 		{
 			return cartItem.Quantity * cartItem.Price;
 		}

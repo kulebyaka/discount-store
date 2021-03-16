@@ -1,8 +1,8 @@
 ﻿namespace DS.BusinessLogic.DiscountRules
 {
-	public interface ICalculationRule<T>
+	public interface ICalculationRule<in T, out TOut>
 	{
-		decimal Apply(T cartItem);
+		TOut Calculate(T cartItem);
 
 		string GetName();
 	}

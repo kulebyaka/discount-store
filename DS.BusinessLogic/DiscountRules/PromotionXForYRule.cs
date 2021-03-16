@@ -3,7 +3,15 @@ using DS.BusinessLogic.Repositories;
 
 namespace DS.BusinessLogic.DiscountRules
 {
-	public class PromotionXForYRule : ICalculationRule<CartItem>
+	/// <summary>
+	/// Special offer when multiple items are bought. 
+	/// </summary>
+	///<example>To define the rule "2 mugs for 1.5€” use the following code: 
+	/// <code>
+	///  new PromotionXForYRule(2, 1.5m);
+	/// </code>
+	///</example>
+	public class PromotionXForYRule : ICalculationRule<CartItem, decimal>
 	{
 		private readonly int _specialCostQuantity;
 		private readonly decimal _specialCost;
@@ -15,7 +23,7 @@ namespace DS.BusinessLogic.DiscountRules
 			_specialCost = specialCost;
 		}
 
-		public decimal Apply(CartItem cartItem)
+		public decimal Calculate(CartItem cartItem)
 		{
 			int quantity = cartItem.Quantity;
 			return quantity / _specialCostQuantity * _specialCost
