@@ -11,7 +11,7 @@ namespace DS.Tests
 {
 	[TestFixture]
 	[Parallelizable(ParallelScope.All)]
-	public class CartServiceTests : TestBase
+	public class CartServiceIntegrationTests : TestBase
 	{
 		[SetUp]
 		public override void Setup()
